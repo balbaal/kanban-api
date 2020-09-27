@@ -60,7 +60,7 @@ module.exports = {
   login: async (req, res) => {
     const { email, password } = req.body;
     try {
-      const resUser = await findOne({ email });
+      const resUser = await userModel.findOne({ email });
       if (!resUser) {
         return res
           .status(403)
