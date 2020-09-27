@@ -4,6 +4,13 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 require("dotenv").config();
 
+// mongoose connection
+const mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost:27017/db-kanban", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const apiRouter = require("./routes/api");
