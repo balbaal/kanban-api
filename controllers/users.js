@@ -49,8 +49,6 @@ module.exports = {
           name,
           email,
           role,
-          token: "",
-          refreshToken: "",
         },
       });
     } catch (error) {
