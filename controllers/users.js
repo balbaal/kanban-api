@@ -1,11 +1,28 @@
 const bcrypt = require("bcryptjs");
+const Validator = require("fastest-validator");
+const v = new Validator();
 
 // Model
 const userModel = require("../models/User");
 
 module.exports = {
   register: async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
+
+    const schemaValidation = {
+      name: "string:min:3",
+      email: "string|unique",
+      password: "string|min:6",
+      role: "string",
+    };
+
+    const resValidation = v.validate(req.body, schemaValidation);
+    if (resValidation.length > 0) {
+      return res.status(400).json({
+        status: "error",
+        message: resValidation,
+      });
+    }
 
     try {
       // checking email already exist
@@ -15,11 +32,23 @@ module.exports = {
           .status(409)
           .json({ status: "error", message: `email: ${email} already exist` });
 
-      await userModel.create({ name, email, password });
+      const resRegister = await userModel.create({
+        name,
+        email,
+        password,
+        role,
+      });
       res.status(201).json({
         status: "success",
         message: `success to create new user with email: ${email}`,
-        data: { name, email, token: "", refreshToken: "" },
+        data: {
+          id: resRegister.id,
+          name,
+          email,
+          role,
+          token: "",
+          refreshToken: "",
+        },
       });
     } catch (error) {
       res
