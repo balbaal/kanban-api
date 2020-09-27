@@ -13,10 +13,10 @@ module.exports = {
     const { name, email, password, role } = req.body;
 
     const schemaValidation = {
-      name: "required|string:min:3",
-      email: "required|string|unique",
-      password: "required|string|min:6",
-      role: "required|string",
+      name: "string|min:3",
+      email: "string|unique",
+      password: "string|min:6",
+      role: "string",
     };
 
     const resValidation = v.validate(req.body, schemaValidation);
