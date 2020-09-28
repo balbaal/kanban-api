@@ -39,13 +39,12 @@ module.exports = {
     }
   },
   getProjectByUserId: async (req, res) => {
-    const { userId } = req.body;
-
+    const { userId } = req.params;
     const schemaValidation = {
       userId: "string",
     };
 
-    const resValidation = v.validate(req.body, schemaValidation);
+    const resValidation = v.validate(req.params, schemaValidation);
     if (resValidation.length > 0) {
       return res.status(400).json({
         status: "error",
@@ -64,6 +63,7 @@ module.exports = {
         data: resProject,
       });
     } catch (error) {
+      console.log("error :>> ", error);
       res.status(500).json({
         status: "error",
         message: `something wrong when trying to get project`,
