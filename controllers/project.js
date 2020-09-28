@@ -5,6 +5,7 @@ const v = new Validator();
 // Model
 const projectModel = require("../models/Project");
 const taskModel = require("../models/Task");
+const userModel = require("../models/User");
 
 module.exports = {
   // Project Controller
@@ -56,10 +57,20 @@ module.exports = {
     }
 
     try {
-      const resProject = await projectModel.find({ userId }).populate({
-        path: "userId",
-        select: "name",
-      });
+      const resUser = await userModel.findById(userId);
+      let resProject = [];
+
+      if (resUser.role === "manager") {
+        resProject = await projectModel.find().populate({
+          path: "userId",
+          select: "name",
+        });
+      } else {
+        resProject = await projectModel.find({ userId }).populate({
+          path: "userId",
+          select: "name",
+        });
+      }
       res.status(200).json({
         status: "success",
         message: "success to get all project list",
