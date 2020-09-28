@@ -117,6 +117,23 @@ module.exports = {
       });
     }
   },
+  deleteProject: async (req, res) => {
+    const { projectId } = req.body;
+
+    try {
+      await projectModel.deleteOne({ _id: projectId });
+      res.status(201).json({
+        status: "success",
+        message: `success delete project id: ${projectId}`,
+        data: { projectId },
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: `something wrong trying to delete project id: ${projectId}`,
+      });
+    }
+  },
 
   // Task Controller
   createTask: async (req, res) => {

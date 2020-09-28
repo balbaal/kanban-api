@@ -12,6 +12,7 @@ router.post("/login", userController.login);
 router.post("/project", projectController.createProject);
 router.get("/project/:userId", projectController.getProjectByUserId);
 router.put("/project", projectController.updateProjectById);
+router.delete("/project", projectController.deleteProject);
 
 // routing task
 router.post("/task", projectController.createTask);
