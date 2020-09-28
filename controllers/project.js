@@ -1,11 +1,13 @@
 const Validator = require("fastest-validator");
-const { findByIdAndDelete, findById } = require("../models/Project");
+const { restart } = require("nodemon");
 const v = new Validator();
 
 // Model
 const projectModel = require("../models/Project");
+const taskModel = require("../models/Task");
 
 module.exports = {
+  // Project Controller
   createProject: async (req, res) => {
     const { projectName, userId } = req.body;
 
@@ -101,6 +103,54 @@ module.exports = {
       res.status(500).json({
         status: "error",
         message: `something wrong trying to update project id: ${projectId}`,
+      });
+    }
+  },
+
+  // Task Controller
+  createTask: async (req, res) => {
+    const { taskTitle, taskDescription, projectId, owner } = req.body;
+
+    const schemaValidation = {
+      taskTitle: "string|empty:false",
+      taskDescription: "string|empty:false",
+      projectId: "string|empty:false",
+      owner: "string|empty:false",
+    };
+
+    const resValidation = v.validate(req.body, schemaValidation);
+    if (resValidation.length > 0) {
+      return res.status(400).json({
+        status: "error",
+        message: resValidation,
+      });
+    }
+
+    try {
+      const payload = {
+        taskTitle,
+        taskDescription,
+        projectId,
+        owner,
+      };
+      const resTask = await taskModel.create(payload);
+
+      res.status(201).json({
+        status: "success",
+        message: `success to created task with id: ${resTask._id}`,
+        data: {
+          id: resTask._id,
+          taskTitle: resTask.taskTitle,
+          taskDescription: resTask.taskDescription,
+          createdDate: resTask.createdDate,
+          status: resTask.status,
+          owner: resTask.owner,
+        },
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: `something wrong trying to create task ${taskTitle}`,
       });
     }
   },

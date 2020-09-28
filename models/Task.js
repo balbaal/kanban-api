@@ -22,6 +22,10 @@ const taskSchema = {
     type: ObjectId,
     ref: "Project",
   },
+  owner: {
+    type: String,
+    required: true,
+  },
 };
 
 module.exports = mongoose.model("Task", taskSchema);

@@ -13,4 +13,7 @@ router.post("/project", projectController.createProject);
 router.get("/project/:userId", projectController.getProjectByUserId);
 router.put("/project", projectController.updateProjectById);
 
+// routing task
+router.post("/task", projectController.createTask);
+
 module.exports = router;
