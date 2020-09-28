@@ -118,7 +118,7 @@ module.exports = {
     }
   },
   deleteProject: async (req, res) => {
-    const { projectId } = req.body;
+    const { projectId } = req.params;
 
     try {
       await projectModel.deleteOne({ _id: projectId });
