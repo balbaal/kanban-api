@@ -9,8 +9,8 @@ module.exports = {
     const { projectName, userId } = req.body;
 
     const schemaValidation = {
-      projectName: "String",
-      userId: "String",
+      projectName: "string",
+      userId: "string",
     };
 
     const resValidation = v.validate(req.body, schemaValidation);
@@ -28,7 +28,7 @@ module.exports = {
 
       res.status(201).json({
         status: "success",
-        message: `project ${projectModel} is created`,
+        message: `project ${projectName} is created`,
       });
     } catch (error) {
       res.status(500).json({
