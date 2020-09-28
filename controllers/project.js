@@ -171,4 +171,24 @@ module.exports = {
       });
     }
   },
+  updateStatusTask: async (req, res) => {
+    const { taskId, status } = req.body;
+
+    try {
+      const resTask = await taskModel.findById(taskId);
+      resTask.status = status;
+      await resTask.save();
+
+      res.status(201).json({
+        status: "success",
+        message: `success update status to ${status}`,
+        data: resTask,
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: `something wrong trying to get task by id: ${taskId}`,
+      });
+    }
+  },
 };
