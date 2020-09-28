@@ -69,4 +69,7 @@ module.exports = {
       });
     }
   },
+  updateProjectById: async (req, res) => {
+    res.json(req.body);
+  },
 };

@@ -11,5 +11,6 @@ router.post("/login", userController.login);
 // routing project
 router.post("/project", projectController.createProject);
 router.get("/project", projectController.getProjectByUserId);
+router.put("/project", projectController.updateProjectById);
 
 module.exports = router;
