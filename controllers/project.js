@@ -154,4 +154,21 @@ module.exports = {
       });
     }
   },
+  getTaskByProjectId: async (req, res) => {
+    const { projectId } = req.params;
+
+    try {
+      const resTask = await taskModel.find({ projectId });
+      res.status(200).json({
+        status: "success",
+        message: `success get task by project id: ${projectId}`,
+        data: resTask,
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: `something wrong trying to get task by project id: ${projectId}`,
+      });
+    }
+  },
 };

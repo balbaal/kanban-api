@@ -15,5 +15,6 @@ router.put("/project", projectController.updateProjectById);
 
 // routing task
 router.post("/task", projectController.createTask);
+router.get("/task/:projectId", projectController.getTaskByProjectId);
 
 module.exports = router;
