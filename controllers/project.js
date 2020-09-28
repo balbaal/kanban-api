@@ -1,4 +1,5 @@
 const Validator = require("fastest-validator");
+const { findByIdAndDelete, findById } = require("../models/Project");
 const v = new Validator();
 
 // Model
@@ -70,6 +71,36 @@ module.exports = {
     }
   },
   updateProjectById: async (req, res) => {
-    res.json(req.body);
+    const { projectName, projectId } = req.body;
+
+    const schemaValidation = {
+      projectId: "string",
+      projectName: "string",
+    };
+
+    const resValidation = v.validate(req.body, schemaValidation);
+    if (resValidation.length > 0) {
+      return res.status(400).json({
+        status: "error",
+        message: resValidation,
+      });
+    }
+
+    try {
+      const resProject = await projectModel.findById(projectId);
+      resProject.projectName = projectName;
+      await resProject.save();
+
+      res.status(201).json({
+        status: "success",
+        message: `success to update project name with id: ${projectId}`,
+      });
+    } catch (error) {
+      console.log("error :>> ", error);
+      res.status(500).json({
+        status: "error",
+        message: `something wrong trying to update project id: ${projectId}`,
+      });
+    }
   },
 };
