@@ -30,6 +30,7 @@ module.exports = {
       res.status(201).json({
         status: "success",
         message: `project ${projectName} is created`,
+        data: { id: resProject._id, projectName: resProject.projectName },
       });
     } catch (error) {
       res.status(500).json({
