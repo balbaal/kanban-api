@@ -1,6 +1,5 @@
 const bcrypt = require("bcryptjs");
 const Validator = require("fastest-validator");
-const { findOne } = require("../models/User");
 const v = new Validator();
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET, JWT_ACCESS_TOKEN_EXPIRED } = process.env;
