@@ -7,7 +7,7 @@ require("dotenv").config();
 
 // mongoose connection
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/db-kanban", {
+mongoose.connect(process.env.DB_CONNECTION, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
