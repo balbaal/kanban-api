@@ -236,4 +236,40 @@ module.exports = {
       });
     }
   },
+  updateTaskById: async (req, res) => {
+    const { taskId, taskDescription, taskTitle } = req.body;
+
+    const schemaValidation = {
+      taskId: "string",
+      taskDescription: "string|empty:false",
+      taskTitle: "string|empty:false",
+    };
+
+    const resValidation = v.validate(req.body, schemaValidation);
+    if (resValidation.length > 0) {
+      return res.status(400).json({
+        status: "error",
+        message: resValidation,
+      });
+    }
+
+    try {
+      const resTask = await taskModel.findById(taskId);
+      resTask.taskTitle = taskTitle;
+      resTask.taskDescription = taskDescription;
+      await resTask.save();
+
+      res.status(201).json({
+        status: "success",
+        message: `success to update task with id: ${taskId}`,
+        data: resTask,
+      });
+    } catch (error) {
+      console.log("error :>> ", error);
+      res.status(500).json({
+        status: "error",
+        message: `something wrong trying to update task id: ${taskId}`,
+      });
+    }
+  },
 };
