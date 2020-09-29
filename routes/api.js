@@ -18,5 +18,6 @@ router.delete("/project/:projectId", projectController.deleteProject);
 router.post("/task", projectController.createTask);
 router.get("/task/:projectId", projectController.getTaskByProjectId);
 router.put("/task", projectController.updateStatusTask);
+router.delete("/task/:taskId", projectController.deleteTask);
 
 module.exports = router;

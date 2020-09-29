@@ -219,4 +219,21 @@ module.exports = {
       });
     }
   },
+  deleteTask: async (req, res) => {
+    const { taskId } = req.params;
+
+    try {
+      await taskModel.deleteOne({ _id: taskId });
+      res.status(201).json({
+        status: "success",
+        message: `success delete task id: ${taskId}`,
+        data: { taskId },
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: `something wrong trying to delete task id: ${taskId}`,
+      });
+    }
+  },
 };
